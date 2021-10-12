@@ -338,6 +338,7 @@ class ConfigTemplateHandler(APIModel):
         scope: Dict,
         expression_scope: Dict = None,
         config_version_ids: List = None,
+        extra_filter_conditions: Dict = None,
     ):
         """
         生成配置
@@ -346,6 +347,7 @@ class ConfigTemplateHandler(APIModel):
         :param scope: 进程范围
         :param expression_scope: 进程表达式范围
         :param config_version_ids: 配置模板版本列表
+        :param extra_filter_conditions: 额外的过滤条件
         :return:
         """
         extra_data = {}
@@ -359,6 +361,8 @@ class ConfigTemplateHandler(APIModel):
                         ]
                     }
                 )
+        if extra_filter_conditions:
+            extra_data["extra_filter_conditions"] = extra_filter_conditions
         return JobHandlers(bk_biz_id=bk_biz_id).create_job(
             job_action=Job.JobAction.GENERATE,
             job_object=Job.JobObject.CONFIGFILE,
