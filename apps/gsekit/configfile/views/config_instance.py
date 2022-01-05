@@ -107,3 +107,45 @@ class ConfigInstanceViews(APIViewSet):
                 filter_released=filter_released,
             )
         )
+
+    @swagger_auto_schema(
+        operation_summary="按拓扑获取配置实例",
+        tags=ConfigInstanceViewTags,
+        request_body=config_instance_serializer.GetConfigInstanceByAppTopoRequestSerializer(),
+        responses={status.HTTP_200_OK: config_instance_serializer.GetConfigInstanceByAppTopoResponseSerializer()},
+    )
+    @action(
+        methods=["POST"],
+        detail=False,
+        serializer_class=config_instance_serializer.GetConfigInstanceByAppTopoRequestSerializer,
+    )
+    def get_config_inst_by_app_topo(self, request):
+        return Response()
+
+    @swagger_auto_schema(
+        operation_summary="创建配置实例",
+        tags=ConfigInstanceViewTags,
+        request_body=config_instance_serializer.CreateConfigInstanceRequestSerializer(),
+        responses={status.HTTP_200_OK: config_instance_serializer.CreateConfigInstanceResponseSerializer()},
+    )
+    @action(
+        methods=["POST"],
+        detail=False,
+        serializer_class=config_instance_serializer.CreateConfigInstanceRequestSerializer,
+    )
+    def create_config_instance(self, request):
+        return Response()
+
+    @swagger_auto_schema(
+        operation_summary="绑定配置实例到应用拓扑",
+        tags=ConfigInstanceViewTags,
+        request_body=config_instance_serializer.BindConfigInstanceToAppTopoRequestSerializer(),
+        responses={status.HTTP_200_OK: config_instance_serializer.BindConfigInstanceToAppTopoResponseSerializer()},
+    )
+    @action(
+        methods=["POST"],
+        detail=False,
+        serializer_class=config_instance_serializer.BindConfigInstanceToAppTopoRequestSerializer,
+    )
+    def bind_config_instance_to_app_topo(self, request):
+        return Response()
