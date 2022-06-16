@@ -62,6 +62,8 @@ class BasePipelineManager(object):
             # 非指定环境类型集群的进程不操作
             if bk_set_env != process_info["set"]["bk_set_env"]:
                 continue
+            # 进程优先级为空时取默认值 0
+            process_info["process"]["priority"] = process_info["process"].get("priority") or 0
             bk_process_id = process_info["process"]["bk_process_id"]
             for proc_inst in proc_inst_map[bk_process_id]:
                 job_task_extra_data = copy.deepcopy(extra_data)
@@ -70,6 +72,12 @@ class BasePipelineManager(object):
                 job_task_extra_data["local_inst_id"] = proc_inst["local_inst_id"]
                 job_task_extra_data["retryable"] = True
                 job_task_extra_data["solutions"] = []
+                job_task_extra_data["topo_level_info"] = {
+                    "bk_biz_id": process_info["process"]["bk_biz_id"],
+                    "bk_set_id": process_info["set"]["bk_set_id"],
+                    "bk_module_id": process_info["module"]["bk_module_id"],
+                    "bk_host_id": process_info["host"]["bk_host_id"],
+                }
                 to_be_created_job_tasks.append(
                     JobTask(
                         job_id=self.job.id,

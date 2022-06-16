@@ -1,5 +1,97 @@
 # Release
 
+## 1.0.16 - 2022-05-25 
+
+### 🐛 Bugfixes
+
+- bugfix: 修复进程优先级缺失情况下任务创建失败的问题 (closed #179)
+
+- bugfix: 修复Windows 配置文件备份报错：The syntax of the command is incorrect. (closed #177)
+
+
+
+**Full Changelog**: https://github.com/TencentBlueKing/bk-process-config-manager/compare/v1.0.15...v1.0.16
+
+
+## 1.0.15 - 2022-05-12 
+
+### 🚀 Features
+
+- feature: 配置模板支持 replace 方法 (closed #154)
+
+- feature: 进程操作支持按拓扑层级隔离 (closed #151)
+
+
+### 🐛 Bugfixes
+
+- fix(front): 打开不同业务的任务记录报错问题
+
+- bugfix: 任务历史页面报错：系统错误 (fixed #158)
+
+- bugfix: 部分进程优先级提前错误的情况下重试任务报错 (fixed #157)
+
+- fix(front): 切换路由报错问题
+
+- bugfix: 修复任务失败误判且多次通知的问题 (closed #168)
+
+
+
+**Full Changelog**: https://github.com/TencentBlueKing/bk-process-config-manager/compare/v1.0.14...v1.0.15
+
+
+## 1.0.14 - 2022-04-02 
+
+### ✨ Optimizations
+
+- optimization: 可观测性建设与鲁棒性提升(close #143)
+
+
+
+**Full Changelog**: https://github.com/TencentBlueKing/bk-process-config-manager/compare/v1.0.13...v1.0.14
+
+
+## 1.0.13 - 2022-03-14 
+
+### 🐛 Bugfixes
+
+- bugfix: 解决因DB问题导致的接口偶现超时等问题(fixed #140)
+
+
+
+**Full Changelog**: https://github.com/TencentBlueKing/bk-process-config-manager/compare/v1.0.12...v1.0.13
+
+
+## 1.0.12 - 2022-03-08 
+
+### 🚀 Features
+
+- feature: PaaS 镜像部署适配 (closed #135)
+
+- feature: 修复转移主机到其他模块并修改该模块下进程启动数量导致同步CMDB进程配置失败的问题 (fixed #133)
+
+
+### ✨ Optimizations
+
+- optimization: mako渲染支持replace方法
+
+
+
+**Full Changelog**: https://github.com/TencentBlueKing/bk-process-config-manager/compare/v1.0.11...v1.0.12
+
+
+## 1.0.11 - 2022-01-20 
+
+### 🐛 Bugfixes
+
+- fix(front): 配置模板文件内容中换行符不对应问题 (closed #122)
+
+- bugfix: 修复子任务状态更新失败的问题(fixed #130)
+
+
+
+**Full Changelog**: https://github.com/TencentBlueKing/bk-process-config-manager/compare/v1.0.10...v1.0.11
+
+
 ## 1.0.10 - 2022-01-12 
 
 ### 🐛 Bugfixes

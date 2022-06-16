@@ -20,6 +20,7 @@ import env
 # pipeline 配置
 from pipeline.celery.settings import *
 
+from apps.utils.env import get_type_env
 
 ENVIRONMENT = env.ENVIRONMENT
 
@@ -41,8 +42,10 @@ INSTALLED_APPS += (
     "pipeline.component_framework",
     "pipeline.django_signal_valve",
     "pipeline.eri",
-    # db
+    # db 重连
     "django_dbconn_retry",
+    # django_prometheus
+    "django_prometheus",
 )
 
 # 自定义中间件
@@ -51,6 +54,18 @@ MIDDLEWARE += (
     "apps.middlewares.CommonMid",
     "apps.middlewares.UserLocalMiddleware",
 )
+
+# 添加django_prometheus中间件
+MIDDLEWARE = (
+    ("django_prometheus.middleware.PrometheusBeforeMiddleware",)
+    + MIDDLEWARE
+    + ("django_prometheus.middleware.PrometheusAfterMiddleware",)
+)
+
+# open telemetry
+ENABLE_OTEL_TRACE = get_type_env("ENABLE_OTEL_TRACE", _type=bool, default=False)
+OTLP_GRPC_HOST = get_type_env("OTLP_GRPC_HOST", _type=str, default="")
+OTLP_BK_DATA_ID = get_type_env("OTLP_BK_DATA_ID", _type=int, default=0)
 
 
 # ===============================================================================
@@ -241,3 +256,12 @@ CACHES["default"] = {
     "LOCATION": "django_cache",
     "OPTIONS": {"MAX_ENTRIES": 10000, "CULL_FREQUENCY": 10},
 }
+
+# 设置DB连接超时时间，配合django_dbconn_retry，解决因DB不稳定导致的各种问题，如：
+# 1. 接口偶现超时 2. pipeline任务执行偶现不执行 等问题
+MAX_DBCONN_RETRY_TIMES = 100
+CONNECT_TIMEOUT = 5
+if "OPTIONS" in DATABASES["default"]:
+    DATABASES["default"]["OPTIONS"]["connect_timeout"] = CONNECT_TIMEOUT
+else:
+    DATABASES["default"]["OPTIONS"] = {"connect_timeout": CONNECT_TIMEOUT}
